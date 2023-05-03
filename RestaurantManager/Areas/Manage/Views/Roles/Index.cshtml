@@ -1,0 +1,29 @@
+﻿@model List<RestaurantManager.Areas.Manage.Models.UserRoleViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1 class="text-center">User Roles</h1>
+<hr />
+
+<table data-classes="table table-sm table-hover" data-page-size="5" data-page-list="[5, 10, 25, 50, 100, All]"data-toggle="table" data-pagination="true" data-search="true">
+    <thead>
+        <tr>
+            <th data-sortable="true">Email</th>
+            <th data-sortable="true">Roles</th>
+            <th>Manage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@string.Join(", ", user.Roles.ToList())</td>
+                <td>
+                    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-userId="@user.UserId">Edit Roles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

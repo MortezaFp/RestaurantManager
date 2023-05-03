@@ -1,0 +1,81 @@
+﻿@using RestaurantManager.Models;
+@model List<Order>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<h1 class="text-center">Orders</h1>
+<hr />
+
+<div class="toolbar">
+        <a class="btn btn-primary" asp-action="Create">Create New</a>
+</div>
+
+
+<table data-show-columns="true"
+       data-classes="table table-sm table-hover" data-page-size="5" data-page-list="[5, 10, 25, 50, 100, All]"
+       data-toolbar=".toolbar" data-toggle="table" data-pagination="true" data-search="true" data-sort-name="date" data-sort-order="desc">
+    <thead>
+        <tr>
+            <th>Customer Name</th>
+            <th data-sortable="true">Total Price (Toman)</th>
+            <th data-sortable="true">Takeaway</th>
+            <th data-sortable="true" data-field="date">Created At</th>
+            <th>Manage</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr class="align-middle">
+                <td>@order.CustomerName</td>
+                <td>@order.TotalPrice.ToString("N0")</td>
+                <td>@order.IsTakeAway</td>
+                <td>@order.CreatedAt</td>
+                <td>
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#OrderDeleteModal"
+                            data-bs-orderId="@order.Id" data-bs-orderCustomerName="@order.CustomerName">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="OrderDeleteModal" tabindex="-1" data-bs-backdrop="true" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="OrderDeleteModalLabel">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="OrderDeleteConfirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <form id="OrderDeleteForm" method="post" action="">
+                    <input class="btn btn-danger" type="submit" value="Yes" />
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('#OrderDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.attr('data-bs-orderId');
+        var name = button.attr('data-bs-orderCustomerName');
+
+        var OrderDeleteConfirmMessage = $('#OrderDeleteModal #OrderDeleteConfirmMessage');
+        var OrderDeleteForm = $('#OrderDeleteModal #OrderDeleteForm');
+
+        OrderDeleteConfirmMessage.html('<p>Are you sure you want to delete order for customer ' + name + '? <br><br>' + 'Notice: This will remove all adjustments and order items related with this order.</p>');
+        OrderDeleteForm.attr('action', '/Order/Home/Delete/' + id);
+    });
+</script>

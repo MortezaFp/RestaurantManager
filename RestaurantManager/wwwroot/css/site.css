@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
+
+html {
+    font-size: 14px;
+    visibility: hidden;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.form-label {
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+}
+
+.form-check-label {
+    margin-top:3px;
+}

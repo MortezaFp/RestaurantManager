@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Restaurent Manager App</p>
+    <hr>
+    <div class="row align-items-stretch justify-content-center">
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-center">Manage Restaurant</h5>
+
+                        <hr />
+                        <a class="btn btn-outline-dark mt-auto" asp-area="Manage" asp-controller="Home" asp-action="Index" role="button">Manage</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (User.IsInRole("Admin") || User.IsInRole("Order Taker"))
+        {
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-center">Take Customers&apos; Orders</h5>
+
+                        <hr />
+                        <a class="btn btn-outline-dark mt-auto" asp-area="Order" asp-controller="Home" asp-action="Index" role="button">Order</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (User.IsInRole("Admin") || User.IsInRole("Cashier"))
+        {
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-center">Manage Cash Register</h5>
+
+                        <hr />
+                        <a class="btn btn-outline-dark mt-auto" asp-area="CashRegister" asp-controller="Home" asp-action="Index" role="button">Cash Register</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+<style>
+    .card {
+        min-height: 150px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+    .card-title {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+</style>

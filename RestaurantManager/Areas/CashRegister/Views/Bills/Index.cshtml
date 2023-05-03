@@ -1,0 +1,44 @@
+﻿@using RestaurantManager.Models;
+@model List<Order>
+
+@{
+    ViewData["Title"] = "Bills";
+}
+
+<h1 class="text-center">Orders</h1>
+<hr />
+
+
+<table data-show-columns="true"
+       data-classes="table table-sm table-hover" data-page-size="5" data-page-list="[5, 10, 25, 50, 100, All]"
+       data-toolbar=".toolbar" data-toggle="table" data-pagination="true" data-search="true" data-sort-name="date" data-sort-order="desc">
+    <thead>
+        <tr>
+            <th>Customer Name</th>
+            <th data-sortable="true">Total Price (Toman)</th>
+            <th data-sortable="true">Takeaway</th>
+            <th data-sortable="true" data-field="date">Created At</th>
+            <th>Manage</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr class="align-middle">
+                <td>@order.CustomerName</td>
+                <td>@order.TotalPrice.ToString("N0")</td>
+                <td>@order.IsTakeAway</td>
+                <td>@order.CreatedAt</td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" asp-action="Report" asp-route-Id="@order.Id">Bill</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+
+</script>

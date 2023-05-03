@@ -1,0 +1,51 @@
+﻿@model Adjustment
+
+@{
+    ViewData["Title"] = "Create Adjustment";
+}
+
+<h1>Create</h1>
+
+<h4>Adjustment</h4>
+<hr />
+<div class="row">
+    <div class="col-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="form-label">Amount (Percent)</label>
+                <input type="number" asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-check form-switch">
+                <input asp-for="IsMandatory" class="form-check-input" />
+                <label asp-for="IsMandatory" class="form-check-label">Mandatory</label>
+            </div>
+            <div class="form-check form-switch">
+                <input asp-for="IsActive" class="form-check-input" />
+                <label asp-for="IsActive" class="form-check-label">Active</label>
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

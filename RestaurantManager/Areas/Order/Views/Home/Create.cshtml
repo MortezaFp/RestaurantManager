@@ -1,0 +1,146 @@
+﻿@model CreateOrderViewModel
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<script src="~/js/Scripts/Order/CreateOrder.js"></script>
+
+<h1 class="text-center">Select Foods</h1>
+<hr />
+
+<div id="orderItemAlertPlaceHolder" class="alert alert-danger alert-dismissible" role="alert" style="display:none"></div>
+
+<form id="orderItemsForm">
+    <div class="toolbar" id="categoryFilter">
+        <div class="d-flex flex-row align-items-center" style="width:350px">
+            <button id="submitOrderItems" class="btn btn-primary"
+                    data-bs-foodId="" data-bs-foodName="" style="width:100%">
+                Submit
+            </button>
+            <label class="ms-5 me-2">Category:</label>
+            <select class="form-select bootstrap-table-filter-control-category"></select>
+        </div>
+    </div>
+
+
+    <table id="table" data-unique-id="id" data-filter-control-container="#categoryFilter" data-filter-control="true" data-show-columns="true"
+           data-classes="table table-sm table-hover" data-page-size="5" data-page-list="[5, 10, 25, 50, 100, All]"
+           data-toolbar=".toolbar" data-toggle="table" data-pagination="true" data-search="true">
+        <thead>
+            <tr>
+                <th>Picture</th>
+                <th data-visible="false" data-field="id">Id</th>
+                <th data-sortable="true" data-field="name">Name</th>
+                <th data-sortable="true" data-field="category" data-filter-control-placeholder="All" data-filter-control="select">Category</th>
+                <th data-sortable="true" data-field="price">Price (Toman)</th>
+                <th data-field="quantity"
+                    data-formatter="quantityFormatter" data-width="150">Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var food in Model.Foods)
+            {
+                <tr class="align-middle">
+                    <td><img src="@food.PicturePath" height="50" width="50" style="border-radius: 50%"></td>
+                    <td>@food.Id</td>
+                    <td>@food.Name</td>
+                    <td>@food.Category.Name</td>
+                    <td>@food.Price.ToString("N0")</td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+<div class="modal fade" id="CreateOrderModal" tabindex="-1" data-bs-backdrop="true" role="dialog">
+    <form id="CreateOrderForm" method="post" action="Create">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="CreateOrderModalLabel">Create Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="OrderItemsPlaceholder"></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="CustomerName" class="form-label">Customer Name</label>
+                        <input asp-for="CustomerName" class="form-control" required />
+                        <span asp-validation-for="CustomerName" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-check">
+                        <input asp-for="IsTakeAway" class="form-check-input" id="isTakeAway" />
+                        <label asp-for="IsTakeAway" class="form-check-label">TakeAway</label>
+                    </div>
+                    <div id="takeAwayAdditionalInputs">
+                        <div class="form-group">
+                            <label class="form-label" asp-for="CustomerAddress">Address</label>
+                            <input asp-for="CustomerAddress" class="form-control" />
+                            <span asp-validation-for="CustomerAddress" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" asp-for="CustomerMobileNumber">Mobile Number</label>
+                            <input asp-for="CustomerMobileNumber" class="form-control" />
+                            <span asp-validation-for="CustomerMobileNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    @if (Model.Adjustments.Any(a => !a.IsMandatory))
+                    {
+                        <hr />
+                        <p>Adjustments: </p>
+                        @foreach (var adjustment in Model.Adjustments)
+                        {
+                            @if (!adjustment.IsMandatory)
+                            {
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input adjustment" name='@adjustment.Id' />
+                                    <label class="form-check-label">@adjustment.Name</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="checkbox" class="form-check-input adjustment" checked hidden name='@adjustment.Id' />
+                            }
+                        }
+
+                    }
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-primary" type="submit" value="Submit" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        
+        <script>
+            function quantityFormatter(value, row, index) {
+                return '<input type="number" class="form-control" value="' + value + '"onchange="quantityChange(this, ' + row.id + ')">';
+            }
+
+            function quantityChange(numberinput, rowId) {
+                $('#table').bootstrapTable('updateCellByUniqueId', {
+                    id: rowId,
+                    field: 'quantity',
+                    value: numberinput.value,
+                    reinit: false
+                });
+            }
+
+
+            $(document).ready(function () {
+                $('body').createOrder()
+            });
+        </script>
+
+    }
+
+}

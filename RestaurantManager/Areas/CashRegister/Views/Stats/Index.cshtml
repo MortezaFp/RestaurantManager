@@ -1,0 +1,80 @@
+﻿@model RestaurantStatsViewModel
+
+@{
+    ViewData["Title"] = "Stats";
+}
+
+<div class="container-fluid">
+    <h2 class="text-center">Total Earnings: @Model.TotalEarnings.ToString("N0")</h2>
+    <hr />
+    <div class="row">
+        <div class="col-sm-4">
+            <h3 class="text-center">Food Earnings</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Food Name</th>
+                            <th>Earnings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.FoodEarnings)
+                        {
+                            <tr>
+                                <td>@item.Food</td>
+                                <td>@item.Earnings.ToString("N0")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <h3 class="text-center">Food Quantities</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Food Name</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.FoodQuantities)
+                        {
+                            <tr>
+                                <td>@item.Food</td>
+                                <td>@item.Quantity</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <h3 class="text-center">Category Earnings</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Category Name</th>
+                            <th>Earnings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CategoryEarnings)
+                        {
+                            <tr>
+                                <td>@item.Category</td>
+                                <td>@item.Earnings.ToString("N0")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

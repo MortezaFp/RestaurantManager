@@ -1,0 +1,86 @@
+﻿@model List<Adjustment>
+
+@{
+    ViewData["Title"] = "Adjustments";
+}
+
+<h1 class="text-center">Adjustments</h1>
+<hr />
+
+<div class="toolbar">
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</div>
+
+<table data-classes="table table-sm table-hover" data-page-size="5" data-page-list="[5, 10, 25, 50, 100, All]" data-toolbar=".toolbar" data-toggle="table" data-pagination="true" data-search="true">
+    <thead>
+        <tr>
+            <th data-sortable="true">Name</th>
+            <th data-sortable="true">Amount (Percent)</th>
+            <th data-sortable="true" data-formatter="markFormatter">Mandatory</th>
+            <th data-sortable="true" data-formatter="markFormatter">Active</th>
+            <th>Manage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var adjustment in Model)
+        {
+            <tr>
+                <td>@adjustment.Name</td>
+                <td>@adjustment.Amount</td>
+                <td>@adjustment.IsMandatory</td>
+                <td>@adjustment.IsActive</td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-Id="@adjustment.Id">Edit</a>
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#AdjustmentDeleteModal"
+                            data-bs-adjustmentId="@adjustment.Id" data-bs-adjustmentName="@adjustment.Name">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="modal fade" id="AdjustmentDeleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AdjustmentDeleteModalLabel">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="AdjustmentDeleteConfirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <form id="AdjustmentDeleteForm" method="post" action="">
+                    <input class="btn btn-danger" type="submit" value="Yes" />
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function markFormatter(value, row) {
+        if (value == 'True')
+            return '<i class="fa-solid fa-check" style = "color: #59ca1c;" > </i>'
+        else
+            return '<i class="fa-solid fa-xmark" style = "color: #e61e1e;" > </i>'
+    }
+
+    $('#AdjustmentDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.attr('data-bs-adjustmentId');
+        var name = button.attr('data-bs-adjustmentName');
+
+        var AdjustmentDeleteConfirmMessage = $('#AdjustmentDeleteModal #AdjustmentDeleteConfirmMessage');
+        var AdjustmentDeleteForm = $('#AdjustmentDeleteModal #AdjustmentDeleteForm');
+
+        AdjustmentDeleteConfirmMessage.text('Are you sure you want to delete adjustment ' + name + '?');
+        AdjustmentDeleteForm.attr('action', '/Manage/Adjustments/Delete/' + id);
+    });
+</script>

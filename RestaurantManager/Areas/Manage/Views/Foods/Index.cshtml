@@ -1,0 +1,98 @@
+﻿@model List<Food>
+
+@{
+    ViewData["Title"] = "Foods";
+}
+
+<h1 class="text-center">Foods</h1>
+<hr />
+
+<div class="toolbar" id="categoryFilter">
+    <div class="d-flex flex-row align-items-center" style="width:350px">
+        <a class="btn btn-primary" asp-action="Create" style="width:150%">Create New</a>
+        <label class="ms-5 me-2">Category:</label>
+        <select class="form-select bootstrap-table-filter-control-category"></select>
+    </div>
+</div>
+
+
+<table data-filter-control-container="#categoryFilter" data-filter-control="true" data-show-columns="true"
+       data-classes="table table-sm table-hover" data-page-size="5" data-page-list="[5, 10, 25, 50, 100, All]"
+       data-toolbar=".toolbar" data-toggle="table" data-pagination="true" data-search="true">
+    <thead>
+        <tr>
+            <th>Picture</th>
+            <th data-sortable="true">Name</th>
+            <th data-sortable="true" data-field="category" data-filter-control-placeholder="All" data-filter-control="select">Category</th>
+            <th data-sortable="true">Price (Toman)</th>
+            <th data-formatter="markFormatter">Active</th>
+            <th data-formatter="markFormatter">In Stock</th>
+            <th>Manage</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var food in Model)
+        {
+            <tr class="align-middle">
+                <td><img src="@food.PicturePath" height="50" width="50" style="border-radius: 50%"></td>
+                <td>@food.Name</td>
+                <td>@food.Category.Name</td>
+                <td>@food.Price.ToString("N0")</td>
+                <td>@food.IsActive</td>
+                <td>@food.InStock</td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-Id="@food.Id">Edit</a>
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#FoodDeleteModal"
+                            data-bs-foodId="@food.Id" data-bs-foodName="@food.Name">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="FoodDeleteModal" tabindex="-1" data-bs-backdrop="true" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="FoodDeleteModalLabel">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="FoodDeleteConfirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <form id="FoodDeleteForm" method="post" action="">
+                    <input class="btn btn-danger" type="submit" value="Yes" />
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function markFormatter(value, row) {
+        if (value == 'True')
+        return '<i class="fa-solid fa-check" style = "color: #59ca1c;" > </i>'
+        else
+            return '<i class="fa-solid fa-xmark" style = "color: #e61e1e;" > </i>'
+    }
+
+    $('#FoodDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.attr('data-bs-foodId');
+        var name = button.attr('data-bs-foodName');
+
+        var FoodDeleteConfirmMessage = $('#FoodDeleteModal #FoodDeleteConfirmMessage');
+        var FoodDeleteForm = $('#FoodDeleteModal #FoodDeleteForm');
+
+        FoodDeleteConfirmMessage.text('Are you sure you want to delete food ' + name + '?');
+        FoodDeleteForm.attr('action', '/Manage/Foods/Delete/' + id);
+    });
+
+</script>
