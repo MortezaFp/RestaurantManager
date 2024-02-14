@@ -23,19 +23,5 @@ This repository contains the source code for a comprehensive restaurant manager 
 3. Configure database connection.
 4. Run the application.
 
-## Folder Structure
-- `backend`: Contains backend code written in .NET Core.
-- `frontend`: Contains frontend code written in Razor, JavaScript, and Bootstrap.
-- `database`: Contains SQL scripts for database setup and management.
-
-## Contributing
-Contributions are welcome! Please follow the contribution guidelines outlined in `CONTRIBUTING.md`.
-
-## License
-This project is licensed under the [MIT License](LICENSE).
-
 ## Authors
-- [Your Name](link-to-your-profile): Role
-
-## Acknowledgments
-- Mention any acknowledgments or inspirations.
+- [Morteza Fattah Pour](https://github.com/MortezaFp/)
