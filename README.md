@@ -17,6 +17,28 @@ This repository contains the source code for a comprehensive restaurant manager 
 - **Frontend**: Razor, JavaScript, Bootstrap
 - **Database**: SQL
 
+## Screen Shots
+![Manage-RestaurantManager-04-06-2025_07_33_PM](https://github.com/user-attachments/assets/53bfa0e6-b803-49ed-86d7-9c3634969448)
+
+![Index-RestaurantManager-04-06-2025_07_34_PM](https://github.com/user-attachments/assets/dc58a751-3001-42dc-bbe5-cf1382253133)
+
+![Foods-RestaurantManager-04-06-2025_07_34_PM](https://github.com/user-attachments/assets/67f7a036-c9d4-4884-9c1f-52c5d29b778d)
+
+![Orders-RestaurantManager-04-06-2025_07_35_PM](https://github.com/user-attachments/assets/09364576-7fea-4412-b584-83e3334dc480)
+
+![Create-Order-RestaurantManager-04-06-2025_07_35_PM](https://github.com/user-attachments/assets/fe83f2a0-b78e-4fdc-9567-617933f43e83)
+
+![Create-Order2-RestaurantManager-04-06-2025_07_35_PM](https://github.com/user-attachments/assets/e88629e9-1881-4341-b428-892f76ca5497)
+
+![Cash-Register-RestaurantManager-04-06-2025_07_36_PM](https://github.com/user-attachments/assets/0ecc9a07-32cf-46e5-b0a0-db0fcf3803da)
+
+![Stats-RestaurantManager-04-06-2025_07_36_PM](https://github.com/user-attachments/assets/4d42aabf-5e79-42d1-a520-692d0946ae72)
+
+![Order-6-pdf-04-06-2025_07_37_PM](https://github.com/user-attachments/assets/5c2ee54d-7f0a-4f7f-9aec-ae3e08f52248)
+
+
+
+
 ## Usage
 1. Clone the repository.
 2. Install necessary dependencies.
