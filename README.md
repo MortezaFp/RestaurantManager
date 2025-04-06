@@ -22,7 +22,7 @@ This repository contains the source code for a comprehensive restaurant manager 
 
 ![Index-RestaurantManager-04-06-2025_07_34_PM](https://github.com/user-attachments/assets/dc58a751-3001-42dc-bbe5-cf1382253133)
 
-![Foods-RestaurantManager-04-06-2025_07_34_PM](https://github.com/user-attachments/assets/67f7a036-c9d4-4884-9c1f-52c5d29b778d)
+![Foods-RestaurantManager-04-06-2025_07_34_PM](https://github.com/user-attachments/assets/f3998985-2e9e-4588-acb0-4dd271ffefb7)
 
 ![Orders-RestaurantManager-04-06-2025_07_35_PM](https://github.com/user-attachments/assets/09364576-7fea-4412-b584-83e3334dc480)
 
